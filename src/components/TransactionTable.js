@@ -33,7 +33,6 @@ function TransactionTable(props) {
 
         var sum_coins = 0;
         transactions.forEach((transaction) => {
-          console.log(transaction.recipient === currentUserId);
           if (transaction.recipient === currentUserId) {
             sum_coins = sum_coins + transaction.amount;
           } else if (transaction.sender === currentUserId) {
