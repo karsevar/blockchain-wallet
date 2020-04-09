@@ -4,12 +4,6 @@ import axios from "axios";
 import TransactionCard from "./TransactionCard";
 
 function TransactionTable(props) {
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Access-Control-Allow-Origin": "*",
-  //     },
-  //   };
   const { currentUserId } = props;
   const [blockChain, setBlockChain] = useState([]);
   const [coinTotal, setCoinTotal] = useState(0);
@@ -33,11 +27,10 @@ function TransactionTable(props) {
 
         var sum_coins = 0;
         transactions.forEach((transaction) => {
-          console.log(transaction.recipient === currentUserId);
           if (transaction.recipient === currentUserId) {
-            sum_coins = sum_coins + transaction.amount;
+            sum_coins = sum_coins + Number(transaction.amount);
           } else if (transaction.sender === currentUserId) {
-            sum_coins = sum_coins - transaction.amount;
+            sum_coins = sum_coins - Number(transaction.amount);
           }
         });
 

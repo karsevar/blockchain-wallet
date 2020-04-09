@@ -1,9 +1,66 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function TransactionForm(props) {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //   };
+  const { currentUserId } = props;
+
+  const [newTransaction, setNewTransaction] = useState({
+    sender: currentUserId,
+    recipient: "",
+    amount: "",
+  });
+
+  const handleChange = (event) => {
+    setNewTransaction({
+      ...newTransaction,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log("submitting following", newTransaction);
+
+    axios
+      .post("http://localhost:5000/transactions/new", newTransaction)
+      .then((result) => {
+        console.log("success message", result);
+      })
+      .catch((error) => {
+        console.log("something is wrong message", error);
+      });
+
+    setNewTransaction({ sender: currentUserId, recipient: "", amount: "" });
+  };
   return (
     <div className='transaction-form-container'>
-      <p>Transaction form Here!</p>
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder='sender'
+          value={newTransaction.sender}
+          name='sender'
+          onChange={handleChange}
+        />
+        <input
+          placeholder='recipient'
+          value={newTransaction.recipient}
+          name='recipient'
+          onChange={handleChange}
+        />
+        <input
+          placeholder='amount'
+          value={newTransaction.amount}
+          name='amount'
+          onChange={handleChange}
+        />
+        <button type='submit'>Submit Transaction</button>
+      </form>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import TransactionTable from "./TransactionTable";
+
 function UserForm(props) {
   const { submitUser, currentUserId } = props;
 
@@ -17,15 +19,18 @@ function UserForm(props) {
   };
 
   return (
-    <div>
-      <input
-        placeholder='userId'
-        value={changeUser}
-        name='userId'
-        onChange={handleChange}
-      />
-      <button onClick={handleClick}>Submit UserId</button>
-    </div>
+    <>
+      <div>
+        <input
+          placeholder='userId'
+          value={changeUser}
+          name='userId'
+          onChange={handleChange}
+        />
+        <button onClick={handleClick}>Submit UserId</button>
+      </div>
+      <TransactionTable currentUserId={currentUserId} />
+    </>
   );
 }
 
