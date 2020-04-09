@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 function TransactionForm(props) {
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //   };
   const { currentUserId } = props;
 
   const [newTransaction, setNewTransaction] = useState({
@@ -19,6 +26,16 @@ function TransactionForm(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submitting following", newTransaction);
+
+    axios
+      .post("http://localhost:5000/transactions/new", newTransaction)
+      .then((result) => {
+        console.log("success message", result);
+      })
+      .catch((error) => {
+        console.log("something is wrong message", error);
+      });
+
     setNewTransaction({ sender: currentUserId, recipient: "", amount: "" });
   };
   return (
